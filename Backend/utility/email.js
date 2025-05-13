@@ -9,14 +9,14 @@ const transporter = nodemailer.createTransport({
   host: "smtp.gmail.com",
   port: 465,
   auth: {
-    user: process.env.EMAIL || "gjayasuriya035@gmail.com",
-    pass: process.env.PASSWORD || "ytdxlfeftumgizfx",
+    user: process.env.EMAIL || "You email",
+    pass: process.env.PASSWORD || "you password",
   },
 });
 
 const sendOtpToEmail = async (email, otp) => {
   const mailOptions = {
-    from: process.env.EMAIL || "gjayasuriya035@gmail.com",
+    from: process.env.EMAIL || "you email",
     to: email,
     subject: `Your OTP Code`,
     text: `Your account has been created successfully.\n\Email: ${email}\n\OTP: ${otp}\n\nPlease keep this information secure.`,

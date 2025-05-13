@@ -9,7 +9,8 @@ import { AuthGuard } from '../services/session.guard';
 
 const routes: Routes = [
   { path: '', component: LoginComponent },
-  { path: 'home', component: HomeComponent, canActivate: [AuthGuard] },
+  { path: 'home', component: HomeComponent},
+  // { path: 'home', component: HomeComponent, canActivate: [AuthGuard] },
   { path: 'login', redirectTo: '' },
   { path: 'login', component: LoginComponent },
   { path: 'signup', component: SignupComponent },
@@ -23,3 +24,4 @@ const routes: Routes = [
   exports: [RouterModule]
 })
 export class AppRoutingModule { }
+

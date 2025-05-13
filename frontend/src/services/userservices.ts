@@ -21,7 +21,12 @@ export class UserService {
   sendOTP(email:any):Observable<any>{
     return this.http.post(`${this.apiUrl}/api/verify-email`, email);
   }
-
+  suggestUserName(data:any):Observable<any>{
+    return this.http.post(`${this.apiUrl}/api/suggest-username`, data);
+  }
+  checkUserName(data:any):Observable<any>{
+    return this.http.post(`${this.apiUrl}/api/check-username`, data);
+  }
 }
 
 @Injectable({

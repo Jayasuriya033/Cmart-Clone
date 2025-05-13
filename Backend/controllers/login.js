@@ -7,18 +7,26 @@ const router = express.Router();
 const prisma = new PrismaClient();
 
 router.post("/", async (req, res) => {
-  const { email, password } = req.body;
-  if (!email || !password) {
-    return res.status(400).json({ error: "Email and Password are required" });
+  const { credential } = req.body;
+  console.log("token",credential);
+  console.log("name",req.body.credential);
+  // console.log(req.user.picture); 
+  // console.log(req.user.sub);
+  
+  const { value, password } = req.body;
+  if (!value || !password) {
+    return res.status(400).json({ error: "Email or Username and Password are required" });
   }
 
   try {
-    const user = await prisma.user.findUnique({
-      where: { email },
+    const user = await prisma.user.findFirst({
+    where:{
+      OR : [ { email : value}, { userName: value },]
+    }
     });
 
     if (!user) {
-      return res.status(404).json({ error: "Email Not Found, Please Signup." });
+      return res.status(404).json({ error: "User Not Found, Please Signup." });
     }
     const passwordMatch = await bcrypt.compare(password, user.password);
 
@@ -28,6 +36,7 @@ router.post("/", async (req, res) => {
     otpGenerate(user);
     res.json({
       status: true,
+      email : user.email,
       message: `Login OTP Sent Successfully to "${user.email}" `,
     });
   } catch (error) {

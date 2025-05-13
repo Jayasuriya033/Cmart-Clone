@@ -14,6 +14,7 @@ export class LoginComponent implements OnInit {
   error: string | null = null;
   message: string | null = null;
   showLogin: boolean | null = true;
+  userEmail : string = ''
 
   constructor(
     private fb: FormBuilder,
@@ -36,11 +37,17 @@ export class LoginComponent implements OnInit {
       this.error = 'Please fill in all required fields.';
       return;
     }
-
-    const loginData = this.loginForm.value;
+    let value = this.loginForm.value.email;
+    let password = this.loginForm.value.password;
+    var loginData = {
+      value: value,
+      password: password
+    };
+    
     this.http.post<any>('http://localhost:3000/api/login', loginData).subscribe(
       (response) => {
         if (response.status) {
+          this.userEmail = response.email;
           alert(response.message);
           this.showLogin = false;
         } else {
@@ -59,9 +66,9 @@ export class LoginComponent implements OnInit {
       return;
     }
     const otp = this.otpVerify.value.otp;
-    let email = this.loginForm.value.email;
+    // let email = this.loginForm.value.email;
     var objData = {
-      email: email,
+      email: this.userEmail,
       enteredOtp: otp,
       type:"login"
     };

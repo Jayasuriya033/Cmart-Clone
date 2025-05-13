@@ -6,9 +6,9 @@ const router = express.Router();
 const prisma = new PrismaClient();
 
 router.post("/", async (req, res) => {
-  const { firstName, lastName, email, phoneNo, password } = req.body;
+  const { firstName, lastName, userName, email, phoneNo, password } = req.body;
 
-  if (!firstName || !lastName || !email || !phoneNo || !password) {
+  if (!firstName || !lastName || !userName || !email || !phoneNo || !password) {
     return res.status(400).json({ error: "All fields are required" });
   }
   const userExist = await prisma.user.findFirst({
@@ -37,6 +37,7 @@ router.post("/", async (req, res) => {
       data: {
         firstName,
         lastName,
+        userName,
         email,
         phoneNo,
         password: hashedPassword,
