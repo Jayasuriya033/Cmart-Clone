@@ -30,4 +30,3 @@ const sendOtpToEmail = async (email, otp) => {
   }
 };
 export default sendOtpToEmail;
-
