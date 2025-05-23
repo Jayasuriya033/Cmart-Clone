@@ -18,3 +18,15 @@ model User {
   createdAt      DateTime? @default(now()) @map("createdAt") @db.Timestamp(0)
   lastModifiedAt DateTime  @updatedAt
 }
+
+model Publication {
+  id       Int    @id @default(autoincrement())
+  pub_code String @unique
+  pub_name String
+}
+
+model Campaign {
+  id       Int    @id @default(autoincrement())
+  cam_code String @unique
+  cam_name String
+}

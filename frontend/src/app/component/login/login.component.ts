@@ -79,7 +79,7 @@ export class LoginComponent implements OnInit {
           if (response.status) {
             localStorage.setItem('token', response.token);
             alert(response.message);
-            this.router.navigate(['/home']);
+            this.router.navigate(['/select']);
           }
         },
         (error) => {

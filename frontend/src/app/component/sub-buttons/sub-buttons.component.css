@@ -1,0 +1,14 @@
+.sub-button{
+    margin: 20px;
+    display: flex;
+    flex-direction: row;
+    gap: 25px;
+}
+.select-pagination{
+     display: flex;
+    flex-direction: row;
+    gap: 5px;
+}
+.btn{
+    cursor: pointer;
+}

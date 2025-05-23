@@ -1,0 +1,69 @@
+<div
+  class="d-flex align-items-center justify-content-between px-4 bg-light"
+  style="
+    background: linear-gradient(90deg, #fdb93b 60%, #0abe0a, #096cff);
+    height: 15vh;
+  "
+>
+  <div class="d-flex align-items-center" style="width: 20%; gap: 90px">
+    <div>
+      <img
+        style="width: 200px; height: 80px; cursor: pointer"
+        src="../../../assets/assets/images/cmart-logo-signin.png"
+        alt="cmart-logo-signin"
+      />
+    </div>
+    <i class="bi bi-list fs-3" style="cursor: pointer" (click)="onToggle()"></i>
+  </div>
+
+  <form
+    class="d-flex align-items-center justify-content-around"
+    style="min-width: 500px"
+    (ngSubmit)="onSubmit()"
+    [formGroup]="selectForm"
+  >
+    <div class="mb-3">
+      <label for="select1" class="form-label fw-bold"
+        >Switch Publication:</label
+      >
+      <select
+        id="select1"
+        [(ngModel)]="selectedpublication"
+        name="select1"
+        class="form-select w-100"
+        formControlName="publication"
+        style="cursor: pointer"
+      >
+        <option *ngFor="let opt of publication" [value]="opt.pub_code">
+          {{ opt.pub_name }}
+        </option>
+      </select>
+    </div>
+
+    <div class="mb-3">
+      <label for="select2" class="form-label fw-bold">Switch Campaign:</label>
+      <select
+        id="select2"
+        [(ngModel)]="selectedcampaign"
+        name="select2"
+        class="form-select w-100"
+        formControlName="campaign"
+        style="cursor: pointer"
+      >
+        <option *ngFor="let opt of campaign" [value]="opt.cam_code">
+          {{ opt.cam_name }}
+        </option>
+      </select>
+    </div>
+  </form>
+  <div
+    class="d-flex align-items-center justify-content-end"
+    style="width: 20%; gap: 20px"
+  >
+    <i class="bi bi-person-circle fs-4" style="cursor: pointer"></i>
+    <span class="me-2">Jayasuriya G</span>
+    <div class="d-flex align-items-center justify-content-end">
+      <span class="px-2 border border-dark" style="cursor: pointer">?</span>
+    </div>
+  </div>
+</div>

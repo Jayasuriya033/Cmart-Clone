@@ -7,16 +7,12 @@ const router = express.Router();
 const prisma = new PrismaClient();
 
 router.post("/", async (req, res) => {
-  const { credential } = req.body;
-  console.log("token",credential);
-  console.log("name",req.body.credential);
-  // console.log(req.user.picture); 
-  // console.log(req.user.sub);
-  
+  const { credential } = req.body;  
   const { value, password } = req.body;
   if (!value || !password) {
     return res.status(400).json({ error: "Email or Username and Password are required" });
   }
+
 
   try {
     const user = await prisma.user.findFirst({
