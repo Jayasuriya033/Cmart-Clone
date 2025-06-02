@@ -69,7 +69,6 @@ export class AuthService {
   private apiUrl =  'http://localhost:3000/api/updatePassword';
   constructor(private http: HttpClient){}
   passwordUpdate(credentials: {username:string, mobileNumber:string, newPassword:string }) :Observable<any>{
-    // console.log(updatePassword);
     return this.http.post<any>(this.apiUrl, credentials);
   }
 }

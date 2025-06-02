@@ -20,7 +20,6 @@ const routes: Routes = [
   { path: 'dashboard', component: DashboardComponent},
   { path: 'subbutton', component: SubButtonsComponent},
   { path: 'table', component: TableComponent},
-  
   { path: 'forgot-password', component: ChangePasswordComponent},
   { path: '', redirectTo: '/login', pathMatch: 'full' },
   { path: '**', component: LoginComponent } 

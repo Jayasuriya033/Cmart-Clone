@@ -10,9 +10,7 @@ const prisma = new PrismaClient();
 
 const otpStore = {};
 export const otpGenerate = async (user) => {
-  let otp = Math.floor(100000 + Math.random() * 900000);
-  console.log(otp);
-  
+  let otp = Math.floor(100000 + Math.random() * 900000);  
   otpStore[user.email] = otp;
   otpStore.user = { id: user.id, email: user.email };
   await sendOtpToEmail(user.email, otp);
@@ -21,8 +19,6 @@ export const otpGenerate = async (user) => {
 
 router.post("/verify-otp", (req, res) => {
   const { email, enteredOtp, type } = req.body;
-  console.log("Data ", otpStore);
-
   if ((!email, !enteredOtp, !type)) {
     return res.status(400).json({ error: "Email and OTP are required" });
   }

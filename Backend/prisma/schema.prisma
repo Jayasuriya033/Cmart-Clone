@@ -30,3 +30,16 @@ model Campaign {
   cam_code String @unique
   cam_name String
 }
+
+
+model Domain {
+  id             Int      @id @default(autoincrement())
+  status         String
+  code           String   @unique
+  type           String
+  description    String
+  universalFlag  String
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+  deletedAt      DateTime? 
+}

@@ -30,10 +30,8 @@ export class HeaderComponent implements OnInit {
       (response) => {
         if (response.status) {
           this.publication = response.publications;
-          console.log(this.publication);
-
           this.campaign = response.campaigns;
-          console.log(this.campaign);
+
         }
       },
       (error) => {

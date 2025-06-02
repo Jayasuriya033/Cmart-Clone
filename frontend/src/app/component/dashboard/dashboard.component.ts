@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ComponentComponent } from '../../pages/component/component.component';
 import { PrintProgramComponent } from '../../pages/print-program/print-program.component';
 import { CategoryComponent } from '../../pages/category/category.component';
@@ -10,23 +10,32 @@ import { PackageCostComponent } from '../../pages/package-cost/package-cost.comp
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.css',
 })
-export class DashboardComponent {
+export class DashboardComponent implements OnInit {
+
   selectedComponent: any = null;
-  @Input() visible: boolean = false;
+  // @Input() visible: boolean = false;
+  @Output() addForm = new EventEmitter<boolean>();
+
+  ngOnInit(){
+  }
+
+  showAddForm = false;
+
+  handleAddClick(event: boolean) {
+    this.showAddForm = event;
+        }
 
   sidebarVisible: boolean = true;
 
   submoduleMap: Record<string, any> = {
-    'Component': ComponentComponent,
+    Component: ComponentComponent,
     'Print Program': PrintProgramComponent,
-    'Period': PeriodComponent,
-    'Category': CategoryComponent,
+    Period: PeriodComponent,
+    Category: CategoryComponent,
     'Package Cost': PackageCostComponent,
   };
 
   onSubModuleChange(moduleName: any) {
-    console.log('Received in dashboard:', moduleName);
     this.selectedComponent = this.submoduleMap[moduleName];
-    console.log('Selected component:', this.selectedComponent);
   }
 }

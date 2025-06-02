@@ -23,7 +23,6 @@ showSubmodules = false;
     this.showSubmodules = !this.showSubmodules;
   }
  onSubmoduleClick(submodule: string) {
-  console.log("Clicked submodule:", submodule);
   this.subModuleSelected.emit(submodule);
 }
 

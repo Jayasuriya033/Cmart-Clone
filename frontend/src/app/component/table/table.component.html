@@ -9,10 +9,34 @@
             <option>Inactive</option>
           </select>
         </th>
-        <th><input type="text" class="form-control form-control-sm" placeholder="ID"></th>
-        <th><input type="text" class="form-control form-control-sm" placeholder="Code"></th>
-        <th><input type="text" class="form-control form-control-sm" placeholder="Type"></th>
-        <th><input type="text" class="form-control form-control-sm" placeholder="Description"></th>
+        <th>
+          <input
+            type="text"
+            class="form-control form-control-sm"
+            placeholder="ID"
+          />
+        </th>
+        <th>
+          <input
+            type="text"
+            class="form-control form-control-sm"
+            placeholder="Code"
+          />
+        </th>
+        <th>
+          <input
+            type="text"
+            class="form-control form-control-sm"
+            placeholder="Type"
+          />
+        </th>
+        <th>
+          <input
+            type="text"
+            class="form-control form-control-sm"
+            placeholder="Description"
+          />
+        </th>
         <th>
           <select class="form-control form-control-sm">
             <option>All</option>
@@ -32,8 +56,19 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let item of tableData">
-        <td [ngClass]="{'text-success': item.status === 'Active', 'text-danger': item.status === 'Inactive'}">{{ item.status }}</td>
+      <tr
+        *ngFor="let item of tableData"
+        (click)="onRowClick(item)"
+        style="cursor: pointer"
+      >
+        <td
+          [ngClass]="{
+            'text-success': item.status === 'Active',
+            'text-danger': item.status === 'Inactive'
+          }"
+        >
+          {{ item.status }}
+        </td>
         <td>{{ item.id }}</td>
         <td>{{ item.code }}</td>
         <td>{{ item.type }}</td>
@@ -44,7 +79,10 @@
   </table>
 
   <div class="d-flex justify-content-between align-items-center">
-    <span>Showing 1 to {{ tableData.length }} of {{ tableData.length }} Entries</span>
+    <span
+      >Showing 1 to {{ tableData.length }} of
+      {{ tableData.length }} Entries</span
+    >
     <nav>
       <ul class="pagination pagination-sm mb-0">
         <li class="page-item"><a class="page-link" href="#">«</a></li>
@@ -60,4 +98,90 @@
     <button class="btn btn-warning me-2">Apply</button>
     <button class="btn btn-outline-warning">Cancel</button>
   </div>
+
+  <div *ngIf="selectedRow" class="card p-4 mt-4 shadow-sm">
+    <h4 class="text-center">Edit Row</h4>
+    <div class="row">
+      <div class="col-md-4 mb-3">
+        <label>Status</label>
+        <select class="form-control" [(ngModel)]="selectedRow.status">
+          <option>Active</option>
+          <option>Inactive</option>
+        </select>
+      </div>
+      <div class="col-md-4 mb-3">
+        <label>Code</label>
+        <input
+          type="text"
+          class="form-control"
+          [(ngModel)]="selectedRow.code"
+        />
+      </div>
+      <div class="col-md-4 mb-3">
+        <label>Type</label>
+        <input
+          type="text"
+          class="form-control"
+          [(ngModel)]="selectedRow.type"
+        />
+      </div>
+      <div class="col-md-6 mb-3">
+        <label>Description</label>
+        <input
+          type="text"
+          class="form-control"
+          [(ngModel)]="selectedRow.description"
+        />
+      </div>
+      <div class="col-md-6 mb-3">
+        <label>Universal Flag</label>
+        <select class="form-control" [(ngModel)]="selectedRow.universalFlag">
+          <option>Y</option>
+          <option>N</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="text-end mt-3">
+      <button class="btn btn-success me-2" (click)="saveChanges()">Save</button>
+      <button class="btn btn-secondary" (click)="cancelEdit()">Cancel</button>
+    </div>
+  </div>
+
+  <div *ngIf="addForm" class="card p-4 mt-4 shadow-sm">
+  <h4 class="text-center">Add Row</h4>
+  <div class="row">
+    <div class="col-md-4 mb-3">
+      <label>Status</label>
+      <select class="form-control" [(ngModel)]="newRow.status" name="status">
+        <option>Active</option>
+        <option>Inactive</option>
+      </select>
+    </div>
+    <div class="col-md-4 mb-3">
+      <label>Code</label>
+      <input type="text" class="form-control" [(ngModel)]="newRow.code" name="code" />
+    </div>
+    <div class="col-md-4 mb-3">
+      <label>Type</label>
+      <input type="text" class="form-control" [(ngModel)]="newRow.type" name="type" />
+    </div>
+    <div class="col-md-6 mb-3">
+      <label>Description</label>
+      <input type="text" class="form-control" [(ngModel)]="newRow.description" name="description" />
+    </div>
+    <div class="col-md-6 mb-3">
+      <label>Universal Flag</label>
+      <select class="form-control" [(ngModel)]="newRow.universalFlag" name="universalFlag">
+        <option>Y</option>
+        <option>N</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="text-end mt-3">
+    <button class="btn btn-success me-2" (click)="saveChanges()">Save</button>
+    <button class="btn btn-secondary" (click)="cancelSave()">Cancel</button>
+  </div>
+</div>
 </div>

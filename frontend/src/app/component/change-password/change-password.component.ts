@@ -137,10 +137,6 @@ export class ChangePasswordComponent implements OnInit {
 
   onSubmit() {
     if (this.changePasswordForm.valid) {
-      console.log(
-        'Password changed successfully',
-        this.changePasswordForm.value
-      );
       this.router.navigate(['/']);
     }
   }

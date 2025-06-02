@@ -117,7 +117,7 @@ export class SignupComponent implements OnInit {
   }
   sendOTP() {
     if (this.signupForm.value.email.invalid) {
-      console.log('Email required');
+      alert('Email required');
     }
     var email = {
       email: this.signupForm.value.email,
@@ -139,7 +139,7 @@ export class SignupComponent implements OnInit {
   }
   verifyOTP() {
     if (this.signupForm.value.otp.invalid) {
-      console.log('OTP required');
+      alert('OTP required');
     }
     const otp = this.signupForm.value.otp;
     let email = this.signupForm.value.email;
@@ -148,7 +148,6 @@ export class SignupComponent implements OnInit {
       enteredOtp: otp,
       type: 'signup',
     };
-    console.log(objData);
 
     this.userService.otpVerify(objData).subscribe(
       (response) => {
@@ -169,12 +168,9 @@ export class SignupComponent implements OnInit {
     if (this.signupForm.valid && !this.errorStatus) {
       this.userService.registerUser(this.signupForm.value).subscribe(
         (response) => {
-          console.log(response);
-
           if (response.status) {
             let message = response.message;
             alert(message);
-            console.log('User registered successfully', response);
             this.router.navigate(['/login']);
           } else {
             alert(response.message);
@@ -182,7 +178,6 @@ export class SignupComponent implements OnInit {
         },
         (error) => {
           alert(error.error.message);
-          console.log('error---', error.error.message);
           console.error('Error registering user', error);
         }
       );

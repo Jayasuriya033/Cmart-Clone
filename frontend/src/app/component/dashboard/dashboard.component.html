@@ -9,18 +9,15 @@
   </div>
 
   <div style="flex-grow: 1; padding: 1rem">
-    <app-buttons></app-buttons>
+   <!-- <app-buttons (addClicked)="handleAddClick($event)"></app-buttons> -->
     <div class="main-container">
-      <app-sub-buttons></app-sub-buttons>
+      <!-- <app-sub-buttons></app-sub-buttons> -->
       <div class="table-content" *ngIf="selectedComponent">
         <ng-container
           (subModuleSelected)="onSubModuleChange($event)"
           [ngComponentOutlet]="selectedComponent"
         ></ng-container>
       </div>
-      <!-- <div>
-        <app-table></app-table>
-      </div> -->
     </div>
   </div>
 </div>

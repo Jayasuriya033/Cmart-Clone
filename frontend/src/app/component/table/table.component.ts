@@ -1,20 +1,110 @@
-import { Component, Input } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  Output
+} from '@angular/core';
+import { DomainService, Domain } from '../../../services/domain.service';
 
 @Component({
   selector: 'app-table',
   templateUrl: './table.component.html',
-  styleUrl: './table.component.css'
+  styleUrls: ['./table.component.css']
 })
 export class TableComponent {
-   @Input() tableData: any[] = []; 
+  @Input() tableData: any[] = [];
+  @Input() addForm: boolean = false;
+  @Output() closeForm = new EventEmitter<boolean>();
 
-   
- data = [
-    { status: 'Active', id: 3554, code: 'MDF22301', type: 'Letter', description: 'Bill Letter', universalFlag: 'N' },
-    { status: 'Active', id: 4711, code: 'MDF32103', type: 'Form', description: 'Grt Billing Invoice', universalFlag: 'N' },
-    { status: 'Active', id: 5516, code: 'MDF32305', type: 'Form', description: '2012 Forward Bill Form', universalFlag: 'N' },
-    { status: 'Active', id: 3551, code: 'MDF02301', type: 'Outer', description: 'Bill O/E', universalFlag: 'N' },
-    { status: 'Active', id: 7527, code: 'MDF023PLY', type: 'Outer', description: 'bill poly outer', universalFlag: 'N' },
-    { status: 'Inactive', id: 161, code: 'APQ320102', type: 'Form', description: '2.9 effort bill form', universalFlag: 'N' },
-  ];
+  selectedRow: any = null;
+  newRow: Domain = {
+    status: '',
+    code: '',
+    type: '',
+    description: '',
+    universalFlag: ''
+  }; 
+
+  constructor(private domainService: DomainService) {}
+
+  onRowClick(row: any) {
+    this.selectedRow = { ...row };
+  }
+
+  // saveChanges() {
+  //   if (this.addForm) {
+  //     this.domainService.createDomain(this.newRow).subscribe({
+  //       next: (res: Domain) => {
+  //         this.tableData.push(res);
+  //         this.newRow = {
+  //           status: '',
+  //           code: '',
+  //           type: '',
+  //           description: '',
+  //           universalFlag: ''
+  //         }; 
+  //         this.closeForm.emit(false);
+  //         this.addForm = false;
+  //       },
+  //       error: (err: any) => console.error('Error creating domain', err)
+  //     });
+  //   } else {
+  //     if (this.selectedRow && this.selectedRow.id != null) {
+  //       const index = this.tableData.findIndex(
+  //         (item) => item.id === this.selectedRow.id
+  //       );
+  //       if (index !== -1) {
+  //         this.tableData[index] = { ...this.selectedRow };
+  //       }
+  //       this.selectedRow = null;
+  //     }
+  //   }
+  // }
+
+  saveChanges() {
+  if (this.addForm) {
+    this.domainService.createDomain(this.newRow).subscribe({
+      next: (res: Domain) => {
+        this.tableData.push(res);
+        this.newRow = {
+          status: '',
+          code: '',
+          type: '',
+          description: '',
+          universalFlag: ''
+        };
+        this.closeForm.emit(false);
+        this.addForm = false;
+      },
+      error: (err: any) => console.error('Error creating domain', err)
+    });
+  } else {
+    if (this.selectedRow && this.selectedRow.id != null) {
+      this.domainService.updateDomain(this.selectedRow.id, this.selectedRow).subscribe({
+        next: (res: Domain) => {
+          const index = this.tableData.findIndex(item => item.id === res.id);
+          if (index !== -1) this.tableData[index] = res;
+          this.selectedRow = null;
+        },
+        error: err => console.error('Error updating domain', err)
+      });
+    }
+  }
+}
+
+
+  cancelEdit() {
+    this.selectedRow = null;
+  }
+
+  cancelSave() {
+    this.newRow = {
+      status: '',
+      code: '',
+      type: '',
+      description: '',
+      universalFlag: ''
+    };
+    this.closeForm.emit(false);
+  }
 }

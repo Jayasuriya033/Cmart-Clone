@@ -18,7 +18,6 @@ export class HomeComponent implements OnInit {
   @HostListener('document:click')
   @HostListener('document:touchstart') 
   onUserActivity() {
-    // console.log("trigerre")
     this.resetTimer();
   }
 
@@ -28,7 +27,6 @@ export class HomeComponent implements OnInit {
   }
 
   logout() {
-    // console.log(this.router);
     this.router.navigate(['/']);
     alert('Logout Successfully!!');
     localStorage.clear();

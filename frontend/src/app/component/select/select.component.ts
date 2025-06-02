@@ -24,21 +24,15 @@ export class SelectComponent implements OnInit {
   publication: any[] = [];
   campaign: any[] = [];
 
-  
-
-  a= 1;
+  a = 1;
 
   ngOnInit() {
     this.publicationAndCampaign.gettingPublicationsAndCampaigns().subscribe(
       (response) => {
         if (response.status) {
-          console.log('response', response);
-
           this.publication = response.publications;
-          console.log(this.publication);
 
           this.campaign = response.campaigns;
-          console.log(this.campaign);
         }
       },
       (error) => {
