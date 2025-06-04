@@ -16,7 +16,7 @@ showSubmodules = false;
     'Print Program',
     'Period',
     'Category',
-    'Package Cost'
+    'Package Cost',
   ];
 
   toggleModule() {

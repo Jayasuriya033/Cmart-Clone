@@ -1,4 +1,4 @@
 <app-buttons (addClicked)="handleAddClick($event)"></app-buttons>
 <app-sub-buttons></app-sub-buttons>
 <h3 class="text-center">Print Program</h3>
-<app-table [tableData]="data"  [addForm]="showAddForm" (closeForm) = "close()"></app-table>
+<app-table [tableData]="data" [tableName]="tableName" [addForm]="showAddForm" (closeForm) = "close()"></app-table>

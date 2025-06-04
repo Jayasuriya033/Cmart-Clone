@@ -17,7 +17,6 @@ router.use("/", suggestUserName);
 router.use("/", checkUserName);
 router.use("/publicationAndCampign", publicationAndCampign);
 router.use("/domain", domain);
-router.use("/domain", domain);
-router.use("/domain/", domain);
+
 
 export default router;

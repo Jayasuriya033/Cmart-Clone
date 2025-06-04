@@ -19,8 +19,8 @@ export class DomainService {
 
   constructor(private http: HttpClient) {}
 
-  getDomains(): Observable<Domain[]> {
-    return this.http.get<Domain[]>(this.baseUrl);
+  getDomains(tableName : any): Observable<Domain[]> {
+    return this.http.post<Domain[]>(`${this.baseUrl}/getDatas`, tableName);
   }
 
   createDomain(domain: Domain): Observable<Domain> {

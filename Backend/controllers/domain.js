@@ -6,9 +6,16 @@ const prisma = new PrismaClient();
 
 router.post("/", async (req, res) => {
   try {
-    const { status, code, type, description, universalFlag } = req.body;
+    const { status, code, type, description, universalFlag, tableName } =
+      req.body;
+    const exist = await prisma[tableName].findUnique({
+      where: { code },
+    });
+    if (exist) {
+      return res.status(409).json({ message: "Code Already Exist" });
+    }
 
-    const domain = await prisma.domain.create({
+    const domain = await prisma[tableName].create({
       data: {
         status,
         code,
@@ -17,36 +24,34 @@ router.post("/", async (req, res) => {
         universalFlag,
       },
     });
-
-    res.status(201).json(domain);
+    return res.status(201).json(domain);
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    return res.status(500).json({ error: error.message });
   }
 });
 
-
-
-router.get("/", async (_req, res) => {
+router.post("/getDatas", async (req, res) => {
+  const { tableName } = req.body;
   try {
-    const domains = await prisma.domain.findMany({
+    const domains = await prisma[tableName].findMany({
       where: { deletedAt: null },
     });
-    res.status(200).json(domains);
+    return res.status(200).json(domains);
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    return res.status(500).json({ error: error.message });
   }
 });
 
 router.put("/:id", async (req, res) => {
   try {
-    console.log("Received ID:", req.params.id);
     const id = parseInt(req.params.id);
+    const { tableName } = req.body;
     if (isNaN(id)) {
       return res.status(400).json({ error: "Invalid ID" });
     }
     const { status, code, type, description, universalFlag } = req.body;
 
-    const updated = await prisma.domain.update({
+    const updated = await prisma[tableName].update({
       where: { id },
       data: {
         status,
@@ -57,43 +62,47 @@ router.put("/:id", async (req, res) => {
       },
     });
 
-    res.status(200).json(updated);
+    return res.status(200).json(updated);
   } catch (error) {
     console.error("Update error:", error);
-    res.status(500).json({ error: error.message });
+    return res.status(500).json({ error: error.message });
   }
 });
 
-router.delete('/:id', async (req, res) => {
+router.delete("/:id", async (req, res) => {
   const { id } = req.params;
 
   if (!id || isNaN(parseInt(id))) {
-    return res.status(400).json({ error: 'Invalid domain ID' });
+    return res.status(400).json({ error: "Invalid domain ID" });
   }
 
   try {
-    const existingDomain = await prisma.domain.findUnique({
+    const existingDomain = await prisma[tableName].findUnique({
       where: { id: parseInt(id) },
     });
 
     if (!existingDomain) {
-      return res.status(404).json({ error: 'Domain not found' });
+      return res.status(404).json({ error: "Domain not found" });
     }
 
     if (existingDomain.deletedAt) {
-      return res.status(400).json({ error: 'Domain is already deleted' });
+      return res.status(400).json({ error: "Domain is already deleted" });
     }
-    const deletedDomain = await prisma.domain.update({
+    const deletedDomain = await prisma[tableName].update({
       where: { id: parseInt(id) },
       data: { deletedAt: new Date() },
     });
 
-    return res.status(200).json({ message: 'Domain soft-deleted successfully', domain: deletedDomain });
+    return res
+      .status(200)
+      .json({
+        message: "Domain soft-deleted successfully",
+        domain: deletedDomain,
+      });
   } catch (error) {
-    console.error('Delete domain error:', error);
-    return res.status(500).json({ error: 'Internal server error' });
+    console.error("Delete domain error:", error);
+    return res.status(500).json({ error: "Internal server error" });
   }
 });
-
 
 export default router;

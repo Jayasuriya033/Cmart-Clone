@@ -32,7 +32,7 @@ model Campaign {
 }
 
 
-model Domain {
+model Component {
   id             Int      @id @default(autoincrement())
   status         String
   code           String   @unique
@@ -42,4 +42,57 @@ model Domain {
   createdAt      DateTime @default(now())
   updatedAt      DateTime @updatedAt
   deletedAt      DateTime? 
+  @@map("Domain_Component")
+}
+
+model PrintProgram{
+  id              Int  @id @default(autoincrement())
+  status          String
+  code            String @unique
+  type            String
+  description     String
+  universalFlag   String
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  deletedAt       DateTime? 
+  @@map("Domain_Print_Program")
+}
+
+model Period{
+  id              Int  @id @default(autoincrement())
+  status          String
+  code            String @unique
+  type            String
+  description     String
+  universalFlag   String
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  deletedAt       DateTime? 
+  @@map("Domain_Period")
+}
+
+model Category{
+  id              Int  @id @default(autoincrement())
+  status          String
+  code            String @unique
+  type            String
+  description     String
+  universalFlag   String
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  deletedAt       DateTime? 
+  @@map("Domain_Category")
+}
+
+model PackageCost{
+  id              Int  @id @default(autoincrement())
+  status          String
+  code            String @unique
+  type            String
+  description     String
+  universalFlag   String
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  deletedAt       DateTime? 
+  @@map("Domain_Package_Cost")
 }
