@@ -1,21 +1,27 @@
 <div class="sub-button">
-    <div class="select-pagination">
-  <p>show</p>
-  <select name="select-pagenation-value" id="" style="height: 20px">
-    <option value="">1</option>
-    <option value="">5</option>
-    <option value="">10</option>
-    <option value="">20</option>
-    <option value="">50</option>
-  </select>
+  <div class="select-pagination">
+    <p>show</p>
+    <select
+      name="select-pagenation-value"
+      [(ngModel)]="selectedValue"
+      (change)="onPageSizeChange($event)"
+      style="height: 20px"
+    >
+      <option value="">Select</option>
+      <option value="1">1</option>
+      <option value="3">3</option>
+      <option value="5">5</option>
+      <option value="10">10</option>
+      <option value="20">20</option>
+      <option value="50">50</option>
+    </select>
   </div>
-  <div class="btn">  <p>entries</p> </div>
-
   <div class="btn">
     <p>show Changes</p>
   </div>
   <div class="btn">
     <p>reset</p>
   </div>
-
 </div>
+
+

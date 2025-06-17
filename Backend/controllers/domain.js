@@ -8,7 +8,7 @@ router.post("/", async (req, res) => {
   try {
     const { status, code, type, description, universalFlag, tableName } =
       req.body;
-    const exist = await prisma[tableName].findUnique({
+    const exist = await prisma.component.findUnique({
       where: { code },
     });
     if (exist) {

@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { DomainService, Domain } from '../../../services/domain.service';
+import { SubButtonsComponent } from '../../component/sub-buttons/sub-buttons.component';
 
 @Component({
   selector: 'app-component',
@@ -7,9 +8,17 @@ import { DomainService, Domain } from '../../../services/domain.service';
   styleUrls: ['./component.component.css'],
 })
 export class ComponentComponent implements OnInit {
+  @ViewChild('subButtons') subButtonsComponent!: SubButtonsComponent;
+
   showAddForm = false;
   data: Domain[] = [];
   tableName = 'component';
+  pageSize = 10;
+  dropdownValue = ''; 
+
+  onPageSizeChange(value: number) {
+    this.pageSize = value;
+  }
 
   constructor(private domainService: DomainService) {}
 
@@ -31,5 +40,10 @@ export class ComponentComponent implements OnInit {
       next: (res: Domain[]) => (this.data = res),
       error: (err: any) => console.error('Error fetching domains', err),
     });
+  }
+
+  onRefreshDropdown() {
+    this.pageSize = 10;
+    this.dropdownValue = ''; 
   }
 }

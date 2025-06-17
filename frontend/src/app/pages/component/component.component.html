@@ -1,5 +1,10 @@
-<app-buttons (addClicked)="handleAddClick($event)"></app-buttons>
-<app-sub-buttons></app-sub-buttons>
+<app-buttons (addClicked)="handleAddClick($event)" (refreshClicked)="onRefreshDropdown()"></app-buttons>
+<app-sub-buttons [(dropdownValue)]="dropdownValue" (pageSizeChange)="onPageSizeChange($event)"></app-sub-buttons>
 <h3 class="text-center">Component</h3>
-<!-- <app-table [tableData]="data" [addForm]="showAddForm" (closeForm) = "close()"></app-table> -->
-<app-table [tableData]="data" [tableName]="tableName" [addForm]="showAddForm" (closeForm) = "close()"></app-table>
+<app-table
+  [tableData]="data"
+  [tableName]="tableName"
+  [addForm]="showAddForm"
+  [pageSize]="pageSize"
+  (closeForm)="handleAddClick($event)"
+></app-table>

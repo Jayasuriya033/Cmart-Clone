@@ -1,3 +1,10 @@
-<app-buttons (addClicked)="handleAddClick($event)"></app-buttons>      <app-sub-buttons></app-sub-buttons>
+<app-buttons (refreshClicked)="onRefreshDropdown()"></app-buttons>
+<app-sub-buttons [(dropdownValue)]="dropdownValue" (pageSizeChange)="onPageSizeChange($event)"></app-sub-buttons>
 <h3 class="text-center">Category</h3>
-<app-table [tableData]="data" [tableName]="tableName" [addForm]="showAddForm" (closeForm) = "handleAddClick($event)"></app-table>
+<app-table
+  [tableData]="data"
+  [tableName]="tableName"
+  [addForm]="showAddForm"
+  [pageSize]="pageSize"
+  (closeForm)="handleAddClick($event)"
+></app-table>

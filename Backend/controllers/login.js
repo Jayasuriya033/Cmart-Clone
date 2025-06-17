@@ -33,6 +33,8 @@ router.post("/", async (req, res) => {
     res.json({
       status: true,
       email : user.email,
+      firstName : user.firstName,
+      lastName : user.lastName,
       message: `Login OTP Sent Successfully to "${user.email}" `,
     });
   } catch (error) {

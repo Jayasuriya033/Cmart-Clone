@@ -3,10 +3,10 @@
     <thead>
       <tr>
         <th>
-          <select class="form-control form-control-sm">
-            <option>All</option>
-            <option>Active</option>
-            <option>Inactive</option>
+          <select class="form-control form-control-sm" [(ngModel)]="filterStatus" (change)="applyFilters()">
+            <option value="">All</option>
+            <option value="Active">Active</option>
+            <option value="Inactive">Inactive</option>
           </select>
         </th>
         <th>
@@ -14,6 +14,8 @@
             type="text"
             class="form-control form-control-sm"
             placeholder="ID"
+            [(ngModel)]="filterId"
+            (input)="applyFilters()"
           />
         </th>
         <th>
@@ -21,6 +23,8 @@
             type="text"
             class="form-control form-control-sm"
             placeholder="Code"
+            [(ngModel)]="filterCode"
+            (input)="applyFilters()"
           />
         </th>
         <th>
@@ -28,6 +32,8 @@
             type="text"
             class="form-control form-control-sm"
             placeholder="Type"
+            [(ngModel)]="filterType"
+            (input)="applyFilters()"
           />
         </th>
         <th>
@@ -35,13 +41,15 @@
             type="text"
             class="form-control form-control-sm"
             placeholder="Description"
+            [(ngModel)]="filterDescription"
+            (input)="applyFilters()"
           />
         </th>
         <th>
-          <select class="form-control form-control-sm">
-            <option>All</option>
-            <option>Y</option>
-            <option>N</option>
+          <select class="form-control form-control-sm" [(ngModel)]="filterUniversalFlag" (change)="applyFilters()">
+            <option value="">All</option>
+            <option value="Y">Y</option>
+            <option value="N">N</option>
           </select>
         </th>
       </tr>
@@ -57,7 +65,7 @@
     </thead>
     <tbody>
       <tr
-        *ngFor="let item of tableData"
+        *ngFor="let item of pagedData"
         (click)="onRowClick(item)"
         style="cursor: pointer"
       >
@@ -79,21 +87,33 @@
   </table>
 
   <div class="d-flex justify-content-between align-items-center">
-    <span
-      >Showing 1 to {{ tableData.length }} of
-      {{ tableData.length }} Entries</span
-    >
+    <span>
+      Showing
+      {{ (currentPage - 1) * pageSize + 1 }}
+      to
+      {{ min(currentPage * pageSize, tableData.length) }}
+      of {{ tableData.length }} Entries
+    </span>
     <nav>
       <ul class="pagination pagination-sm mb-0">
-        <li class="page-item"><a class="page-link" href="#">«</a></li>
-        <li class="page-item active"><a class="page-link" href="#">1</a></li>
-        <li class="page-item"><a class="page-link" href="#">2</a></li>
-        <li class="page-item"><a class="page-link" href="#">3</a></li>
-        <li class="page-item"><a class="page-link" href="#">»</a></li>
+      <li class="page-item" [class.disabled]="currentPage === 1">
+          <a class="page-link" style="cursor: pointer;" (click)="prevPage(); $event.preventDefault()">«</a>
+        </li>
+        <li
+          class="page-item"
+          *ngFor="let page of [].constructor(totalPages); let i = index"
+          [class.active]="currentPage === i + 1"
+        >
+          <a class="page-link" style="cursor: pointer;" (click)="goToPage(i + 1); $event.preventDefault()">{{ i + 1 }}</a>
+        </li>
+        <li class="page-item" [class.disabled]="currentPage === totalPages">
+          <a class="page-link" style="cursor: pointer;" (click)="nextPage(); $event.preventDefault()">»</a>
+        </li>
       </ul>
     </nav>
   </div>
-
+<!-- new Array() -->
+ <!-- const arr = new Array(totalPages); -->
   <div class="text-end mt-3">
     <button class="btn btn-warning me-2">Apply</button>
     <button class="btn btn-outline-warning">Cancel</button>
