@@ -144,6 +144,7 @@ export class TableComponent implements OnChanges, OnInit {
               if (index !== -1) this.tableData[index] = res;
               this.selectedRow = null;
               this.updatePagedData();
+              alert('Status updated successfully!');
             },
             error: (err) => console.error('Error updating domain', err),
           });
@@ -181,5 +182,22 @@ export class TableComponent implements OnChanges, OnInit {
   ngOnInit() {
     this.filteredData = [...this.tableData];
     this.applyFilters();
+  }
+
+
+  changeSelectedRowStatus(status: 'Active' | 'Inactive') {
+    if (this.selectedRow) {
+      if (this.selectedRow.status !== status) {
+        const confirmMsg = `Are you sure you want to change status to ${status}?`;
+        if (confirm(confirmMsg)) {
+          this.selectedRow.status = status;
+          this.saveChanges(); 
+        }
+      } else {
+        alert(`Row is already ${status}.`);
+      }
+    } else {
+      alert('Please select a row first.');
+    }
   }
 }

@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { DomainService, Domain } from '../../../services/domain.service';
-import { SubButtonsComponent } from '../../component/sub-buttons/sub-buttons.component';
+import { TableComponent } from '../../component/table/table.component';
 
 @Component({
   selector: 'app-component',
@@ -8,7 +8,7 @@ import { SubButtonsComponent } from '../../component/sub-buttons/sub-buttons.com
   styleUrls: ['./component.component.css'],
 })
 export class ComponentComponent implements OnInit {
-  @ViewChild('subButtons') subButtonsComponent!: SubButtonsComponent;
+  @ViewChild(TableComponent) tableComponent!: TableComponent ;
 
   showAddForm = false;
   data: Domain[] = [];
@@ -45,5 +45,12 @@ export class ComponentComponent implements OnInit {
   onRefreshDropdown() {
     this.pageSize = 10;
     this.dropdownValue = ''; 
+  }
+
+  
+  onStatusChange(status: 'Active' | 'Inactive') {
+    if (this.tableComponent) {
+      this.tableComponent.changeSelectedRowStatus(status);
+    }
   }
 }

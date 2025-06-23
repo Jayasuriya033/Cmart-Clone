@@ -1,4 +1,9 @@
-<app-buttons (addClicked)="handleAddClick($event)" (refreshClicked)="onRefreshDropdown()"></app-buttons>
+<app-buttons
+  (addClicked)="handleAddClick($event)"
+  (refreshClicked)="onRefreshDropdown()"
+  (activeClicked)="onStatusChange('Active')"
+  (inactiveClicked)="onStatusChange('Inactive')"
+></app-buttons>
 <app-sub-buttons [(dropdownValue)]="dropdownValue" (pageSizeChange)="onPageSizeChange($event)"></app-sub-buttons>
 <h3 class="text-center">Component</h3>
 <app-table
